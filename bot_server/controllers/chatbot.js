@@ -15,7 +15,7 @@ const requestNext = async(req, res) => {
         return
     }
     if (requestCode === 'typedText' && reqData.query !== null ) {
-        const result = await detectKeyPhrases(reqData.query, (error, data) => {
+        const result = await detectKeyPhrases(reqData.query, (err, data) => {
             if(data) {
                 res.json(data)
             } else {

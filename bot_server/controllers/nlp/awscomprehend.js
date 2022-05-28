@@ -12,17 +12,24 @@ const detectKeyPhrases = async(text, completion) => {
     // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-nodejs.html
     // https://docs.aws.amazon.com/comprehend/latest/dg/supported-languages.html
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Comprehend.html#batchDetectKeyPhrases-property
+    const result = {}
     const command = {
-        TextList: [text],
+        Text: text,
         LanguageCode: 'en'
     }
-    comprehend.batchDetectKeyPhrases(command, (err, data) => {
-        if (err) {
-            //console.log(`Error in batchDetectKeyPhrases ${err}`)
-            completion(err,null)
+    comprehend.detectEntities(command, (err, data) => {
+        if (data) {
+            result.entities = data
+            comprehend.detectKeyPhrases(command, (err, data) => {
+                if(data) {
+                    result.phrases = data
+                    completion(null, result)
+                } else {
+                    completion(error, null)
+                }
+            })
         } else {
-            //console.log(`Success in batchDetectKeyPhrases ${data}`)
-            completion(null,data)
+            completion(error, null)
         }
     })
 }
