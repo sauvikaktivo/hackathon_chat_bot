@@ -2,6 +2,7 @@ const { nlpAnalyse } = require('../controllers/nlp/awscomprehend')
 const {processNLPResult, BotTasksType } = require('../controllers/botTaskGenerator')
 const { messageGenerator } = require('../controllers/botMessageGenerator')
 const { quickActionGenerator } = require('../controllers/botQuickActionGenerator')
+const { getDayFirstLaunchUI } = require('../SDUIs/DayFirstLaunchUI')
 const { response } = require('express')
 
 const requestNext = async(req, res) => {
@@ -56,6 +57,7 @@ const requestNext = async(req, res) => {
         const messages = messageGenerator(botTask)
         const quickActions = quickActionGenerator(botTask)
         res.json({
+            layout: getDayFirstLaunchUI(),
             messages: messages,
             quickActions: quickActions
         })

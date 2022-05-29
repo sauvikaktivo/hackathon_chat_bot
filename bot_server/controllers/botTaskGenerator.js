@@ -17,11 +17,18 @@ const BotTasksType = {
     // All Food module tasks
     FOOD_INFO : 200,
     LOG_FOOD: 201,
+    FIBRE_SCORE: 202,
     // More task id for sleep module
 
     // Mind module
-    SHOW_MIND_ARTICLE: 300,
+    MEDITATION_INFO: 300,
+    SHOW_MIND_ARTICLE: 301,
+    ADD_MIND_SCORE: 302,
+    MIND_SCORE_INFO: 303,
     // Moe module task types
+
+    // Exercise
+    EXERCISE_INFO: 401,
 
     // UTILS
     DAY_FIRST_LAUNCH_OPTION: 100000,
