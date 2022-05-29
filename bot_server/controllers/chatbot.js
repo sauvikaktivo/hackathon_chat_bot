@@ -6,10 +6,11 @@ const { getDayFirstLaunchUI } = require('../SDUIs/DayFirstLaunchUI')
 const { response } = require('express')
 
 const requestNext = async(req, res) => {
+    console.log(req.body)
     const requestCode = req.body.request.code
     const requestVersion = req.body.request.version
     const reqData = req.body.request.data
-
+    
     // Sanity check
     if (requestCode === null || requestVersion === null) {
         res.statuscode = 400

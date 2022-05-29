@@ -13,6 +13,10 @@
 		458263D9284408FE0074A9D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 458263D7284408FE0074A9D8 /* Main.storyboard */; };
 		458263DB284409000074A9D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 458263DA284409000074A9D8 /* Assets.xcassets */; };
 		458263DE284409000074A9D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 458263DC284409000074A9D8 /* LaunchScreen.storyboard */; };
+		458263E8284409370074A9D8 /* ChatBotModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263E7284409370074A9D8 /* ChatBotModels.swift */; };
+		458263EB28440AA00074A9D8 /* ChatBotAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263EA28440AA00074A9D8 /* ChatBotAPI.swift */; };
+		458263ED2844113F0074A9D8 /* BotChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263EC2844113F0074A9D8 /* BotChatViewController.swift */; };
+		458263EF284419F20074A9D8 /* UIImageView+Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263EE284419F20074A9D8 /* UIImageView+Networking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		458263DA284409000074A9D8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		458263DD284409000074A9D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		458263DF284409000074A9D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		458263E7284409370074A9D8 /* ChatBotModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotModels.swift; sourceTree = "<group>"; };
+		458263EA28440AA00074A9D8 /* ChatBotAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotAPI.swift; sourceTree = "<group>"; };
+		458263EC2844113F0074A9D8 /* BotChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotChatViewController.swift; sourceTree = "<group>"; };
+		458263EE284419F20074A9D8 /* UIImageView+Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Networking.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,8 @@
 		458263D0284408FE0074A9D8 /* AktivoChatBot */ = {
 			isa = PBXGroup;
 			children = (
+				458263E928440A720074A9D8 /* Networking */,
+				458263E52844091E0074A9D8 /* ChatViewController */,
 				458263D1284408FE0074A9D8 /* AppDelegate.swift */,
 				458263D3284408FE0074A9D8 /* SceneDelegate.swift */,
 				458263D5284408FE0074A9D8 /* ViewController.swift */,
@@ -65,6 +75,32 @@
 				458263DF284409000074A9D8 /* Info.plist */,
 			);
 			path = AktivoChatBot;
+			sourceTree = "<group>";
+		};
+		458263E52844091E0074A9D8 /* ChatViewController */ = {
+			isa = PBXGroup;
+			children = (
+				458263E6284409260074A9D8 /* Models */,
+				458263EC2844113F0074A9D8 /* BotChatViewController.swift */,
+			);
+			path = ChatViewController;
+			sourceTree = "<group>";
+		};
+		458263E6284409260074A9D8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				458263E7284409370074A9D8 /* ChatBotModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		458263E928440A720074A9D8 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				458263EA28440AA00074A9D8 /* ChatBotAPI.swift */,
+				458263EE284419F20074A9D8 /* UIImageView+Networking.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +174,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				458263ED2844113F0074A9D8 /* BotChatViewController.swift in Sources */,
+				458263EB28440AA00074A9D8 /* ChatBotAPI.swift in Sources */,
 				458263D6284408FE0074A9D8 /* ViewController.swift in Sources */,
 				458263D2284408FE0074A9D8 /* AppDelegate.swift in Sources */,
 				458263D4284408FE0074A9D8 /* SceneDelegate.swift in Sources */,
+				458263E8284409370074A9D8 /* ChatBotModels.swift in Sources */,
+				458263EF284419F20074A9D8 /* UIImageView+Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

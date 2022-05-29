@@ -14,37 +14,37 @@ const DayFirstLaunchUI = {
             items: [
                 {
                     title: 'Add Weight',
-                    imageUrl: '/resources/icons/add_weight.png',
+                    imageUrl: '/public/resources/icons/add_weight.png',
                     botTaskId: BotTasksType.ADD_WEIGHT
                 },
                 {
                     title: 'Exercise',
-                    imageUrl: '/resources/icons/exercise.png',
+                    imageUrl: '/public/resources/icons/exercise.png',
                     botTaskId: BotTasksType.EXERCISE_INFO
                 },
                 {
                     title: 'Meditaion',
-                    imageUrl: '/resources/icons/meditaion.png',
+                    imageUrl: '/public/resources/icons/meditaion.png',
                     botTaskId: BotTasksType.MEDITATION_INFO
                 },
                 {
                     title: 'Mind Article',
-                    imageUrl: '/resources/icons/mind_article.png',
+                    imageUrl: '/public/resources/icons/mind_article.png',
                     botTaskId: BotTasksType.SHOW_MIND_ARTICLE
                 },
                 {
                     title: 'Fibre Score',
-                    imageUrl: '/resources/icons/fibre_score.png',
+                    imageUrl: '/public/resources/icons/fibre_score.png',
                     botTaskId: BotTasksType.FIBRE_SCORE
                 },
                 {
                     title: 'Log Food',
-                    imageUrl: '/resources/icons/log_food.png',
+                    imageUrl: '/public/resources/icons/log_food.png',
                     botTaskId: BotTasksType.LOG_FOOD
                 },
                 {
                     title: 'Mind Score',
-                    imageUrl: '/resources/icons/mind_score.png',
+                    imageUrl: '/public/resources/icons/mind_score.png',
                     botTaskId: BotTasksType.MIND_SCORE_INFO
                 }
             ]

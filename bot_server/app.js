@@ -3,6 +3,7 @@ const app = express()
 const port = 3000
 const chatbot = require('./routes/chatbot')
 
+app.use('/public', express.static('public'))
 
 // Hello world
 app.get('/', (req, res) => {
