@@ -1,4 +1,6 @@
-### Request bodies
+### Request Bodies
+
+#### Ways to initiate chat
 ```
 {
     "request": {
@@ -8,6 +10,7 @@
 }
 ```
 
+#### User wants to chat with bot
 ```
 {
     "request": {
@@ -15,6 +18,18 @@
         "version":"1.0.0",
         "data": {
             "query": "want to enter my weight on 26th may"
+        }
+    }
+}
+```
+#### Quick Action
+```
+{
+    "request": {
+        "code": "quickAction",
+        "version":"1.0.0",
+        "data": {
+            "botTaskId": 200
         }
     }
 }

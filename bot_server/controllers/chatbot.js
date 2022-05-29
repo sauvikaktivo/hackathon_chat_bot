@@ -1,6 +1,7 @@
 const { nlpAnalyse } = require('../controllers/nlp/awscomprehend')
 const {processNLPResult, BotTasksType } = require('../controllers/botTaskGenerator')
 const { messageGenerator } = require('../controllers/botMessageGenerator')
+const { quickActionGenerator } = require('../controllers/botQuickActionGenerator')
 const { response } = require('express')
 
 const requestNext = async(req, res) => {
@@ -28,11 +29,20 @@ const requestNext = async(req, res) => {
                         message: `Sorry I could not understand: ${reqData.query}, try something else`
                     }
                 }
-                res.json(messageGenerator(botTask))
+                const messages = messageGenerator(botTask)
+                const quickActions = quickActionGenerator(botTask)
+                res.json({
+                    messages: messages,
+                    quickActions: quickActions
+                })
             } else {
                 const botTask = processNLPResult(data)
-                // Determinde messages for bot task to send
-                res.json(messageGenerator(botTask))
+                const messages = messageGenerator(botTask)
+                const quickActions = quickActionGenerator(botTask)
+                res.json({
+                    messages: messages,
+                    quickActions: quickActions
+                })
             }
         })
         return
@@ -40,14 +50,20 @@ const requestNext = async(req, res) => {
 
     // User selected predefined action
     if (requestCode === 'dayFirstLaunch') {
-        res.json(messageGenerator({
+        const botTask = {
             task: BotTasksType.DAY_FIRST_LAUNCH_OPTION,
-        }))
+        }
+        const messages = messageGenerator(botTask)
+        const quickActions = quickActionGenerator(botTask)
+        res.json({
+            messages: messages,
+            quickActions: quickActions
+        })
         return
     }
 
     // Error response
-    res.send('I am going to serve you in a much better way')
+    res.send('I am going to serve you in a much better way. IN FUTURE...:)')
 }
 
 module.exports = {

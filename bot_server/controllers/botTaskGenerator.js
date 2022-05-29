@@ -2,26 +2,50 @@
 
 const BotTasksType = {
     REPORT_ERROR: -1,
-    ADD_WEIGHT: 0,
-    ADD_SLEEP : 1,
-    DAY_FIRST_LAUNCH_OPTION: 2
+
+    // All weight module tasks
+    WEIGHT_INFO: 0,
+    ADD_WEIGHT: 1,
+    // More task id for Weight module
+
+    // All sleep module tasks
+    SLEEP_INFO : 100,
+    ADD_SLEEP: 101,
+    UPDATE_LAST_NIGHT_SLEEP: 102,
+    // More task id for sleep module
+
+    // All Food module tasks
+    FOOD_INFO : 200,
+    LOG_FOOD: 201,
+    // More task id for sleep module
+
+    // Mind module
+    SHOW_MIND_ARTICLE: 300,
+    // Moe module task types
+
+    // UTILS
+    DAY_FIRST_LAUNCH_OPTION: 100000,
+
+
+    // NO ACTION
+    NO_ACTION: 999999
 }
 const nplUserIntentMapper = [
     {
         keywords: ['add', 'weight'],
-        intent: BotTasksType.ADD_WEIGHT
+        intent: BotTasksType.WEIGHT_INFO
     },
     {
         keywords: ['add', 'sleep'],
-        intent: BotTasksType.ADD_SLEEP
+        intent: BotTasksType.SLEEP_INFO
     },
     {
         keywords: ['enter', 'weight'],
-        intent: BotTasksType.ADD_WEIGHT
+        intent: BotTasksType.WEIGHT_INFO
     },
     {
         keywords: ['enter', 'sleep'],
-        intent: BotTasksType.ADD_SLEEP
+        intent: BotTasksType.SLEEP_INFO
     }
 ]
 
@@ -37,7 +61,7 @@ const processNLPResult = (nlpResult) => {
     // COUPLE OF AWS MARKET PLACE APPS
 
     return {
-        task: BotTasksType.ADD_WEIGHT,
+        task: BotTasksType.WEIGHT_INFO,
         data: {
             date: new Date()
         }

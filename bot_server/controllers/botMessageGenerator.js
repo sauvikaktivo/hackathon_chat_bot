@@ -2,7 +2,7 @@ const {processNLPResult, BotTasksType } = require('../controllers/botTaskGenerat
 const {DateToString}= require('../utils/utils')
 
 const messageGenerator = (botTask) => {
-    if (botTask.task === BotTasksType.ADD_WEIGHT) {
+    if (botTask.task === BotTasksType.WEIGHT_INFO) {
         const messages = []
         AddWeightMessages.forEach( (msg) => {
             messages.push({
@@ -11,7 +11,7 @@ const messageGenerator = (botTask) => {
             })
         })
         return messages
-    } else if (botTask.task === BotTasksType.ADD_SLEEP) {
+    } else if (botTask.task === BotTasksType.SLEEP_INFO) {
         return [
             {
                 message: AddSleepMessages[0],
