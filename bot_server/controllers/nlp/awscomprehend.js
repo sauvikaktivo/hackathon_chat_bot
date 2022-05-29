@@ -1,7 +1,4 @@
-const { IoTEvents } = require('aws-sdk');
 const AWS = require('aws-sdk');
-const { isRequired } = require('nodemon/lib/utils');
-
 AWS.config.loadFromPath('./config/credentials.json');
 
 var comprehend = new AWS.Comprehend({
@@ -112,5 +109,5 @@ function comprehendDetectSyntax(text) {
 }
 
 module.exports = {
-    detectKeyPhrases: nlpAnalyse,
+    nlpAnalyse,
 }

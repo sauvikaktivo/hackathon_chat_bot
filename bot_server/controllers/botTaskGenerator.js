@@ -1,0 +1,126 @@
+// TODO: ML Based Processing 
+
+const BotTasksType = {
+    REPORT_ERROR: -1,
+    ADD_WEIGHT: 0,
+    ADD_SLEEP : 1,
+    DAY_FIRST_LAUNCH_OPTION: 2
+}
+const nplUserIntentMapper = [
+    {
+        keywords: ['add', 'weight'],
+        intent: BotTasksType.ADD_WEIGHT
+    },
+    {
+        keywords: ['add', 'sleep'],
+        intent: BotTasksType.ADD_SLEEP
+    },
+    {
+        keywords: ['enter', 'weight'],
+        intent: BotTasksType.ADD_WEIGHT
+    },
+    {
+        keywords: ['enter', 'sleep'],
+        intent: BotTasksType.ADD_SLEEP
+    }
+]
+
+const processNLPResult = (nlpResult) => {
+
+    // TODO: Due implementation
+    // 1. Process incoming nlp result to figure out next task type for BOT
+    // 2. Extract associated data like date or other information. `nlpResult.entities` 
+    // objects may come with type DATE
+
+    // TODO: Add more note on PPT
+    // SENTENCE SIMILARITY CHECK BERT ALGO
+    // COUPLE OF AWS MARKET PLACE APPS
+
+    return {
+        task: BotTasksType.ADD_WEIGHT,
+        data: {
+            date: new Date()
+        }
+    }
+    /*  In case of processing error passing error
+    return {
+        task: BotTasksType.REPORT_ERROR
+    }
+    */
+}
+
+module.exports = {
+    processNLPResult,
+    BotTasksType
+}
+/*
+{
+    "phrases": [
+        {
+            "text": "my weight",
+            "score": 0.9999569654464722
+        },
+        {
+            "text": "26th",
+            "score": 0.988757312297821
+        }
+    ],
+    "entities": [
+        {
+            "text": "26th may",
+            "score": 0.9894523620605469,
+            "type": "DATE"
+        }
+    ],
+    "syntaxes": [
+        {
+            "tokenId": 1,
+            "text": "want",
+            "partOfSpeech": "VERB",
+            "score": 0.995025634765625
+        },
+        {
+            "tokenId": 2,
+            "text": "to",
+            "partOfSpeech": "PART",
+            "score": 0.9999856948852539
+        },
+        {
+            "tokenId": 3,
+            "text": "enter",
+            "partOfSpeech": "VERB",
+            "score": 0.9999977350234985
+        },
+        {
+            "tokenId": 4,
+            "text": "my",
+            "partOfSpeech": "PRON",
+            "score": 0.9999768733978271
+        },
+        {
+            "tokenId": 5,
+            "text": "weight",
+            "partOfSpeech": "NOUN",
+            "score": 0.9998605251312256
+        },
+        {
+            "tokenId": 6,
+            "text": "on",
+            "partOfSpeech": "ADP",
+            "score": 0.9905756711959839
+        },
+        {
+            "tokenId": 7,
+            "text": "26th",
+            "partOfSpeech": "NOUN",
+            "score": 0.6818108558654785
+        },
+        {
+            "tokenId": 8,
+            "text": "may",
+            "partOfSpeech": "AUX",
+            "score": 0.9970732927322388
+        }
+    ]
+}
+*/

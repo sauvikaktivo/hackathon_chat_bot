@@ -1,29 +1,32 @@
+### Request bodies
 ```
 {
-    "codes": [
-        {"code": "dayFirstLaunch", "version": "1.0.0"}
-    ],
-    "req": {
-
+    "request": {
+        "code": "dayFirstLaunch",
+        "version":"1.0.0"
     }
 }
 ```
 
 ```
 {
-    "codes": [
-        {"code": "userInputText", "version": "1.0.0"}
-    ],
-    "req": {
-        "text": "sleep"
+    "request": {
+        "code": "typedText",
+        "version":"1.0.0",
+        "data": {
+            "query": "want to enter my weight on 26th may"
+        }
     }
 }
 ```
-
+-----
+### Restart Server
 ```
 sudo kill -9 `sudo lsof -t -i:3000`
 ```
-
+----
+### Amazon Comprehend Resonses
+#### Key Phrases Analysis
 ```
 {
     "KeyPhrases": [
@@ -42,7 +45,7 @@ sudo kill -9 `sudo lsof -t -i:3000`
     ]
 }
 ```
-
+#### Key Entries Analysis
 ```
 {
     "Entities": [
@@ -56,7 +59,7 @@ sudo kill -9 `sudo lsof -t -i:3000`
     ]
 }
 ```
-
+#### Key Syntax Token Analysis
 ```
 {
     "SyntaxTokens": [

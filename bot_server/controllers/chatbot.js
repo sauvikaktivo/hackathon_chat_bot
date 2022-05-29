@@ -1,4 +1,7 @@
-const {detectKeyPhrases} = require('../controllers/nlp/awscomprehend')
+const { nlpAnalyse } = require('../controllers/nlp/awscomprehend')
+const {processNLPResult, BotTasksType } = require('../controllers/botTaskGenerator')
+const { messageGenerator } = require('../controllers/botMessageGenerator')
+const { response } = require('express')
 
 const requestNext = async(req, res) => {
     const requestCode = req.body.request.code
@@ -14,19 +17,38 @@ const requestNext = async(req, res) => {
         })
         return
     }
+
+    // User typed something
     if (requestCode === 'typedText' && reqData.query !== null ) {
-        const result = await detectKeyPhrases(reqData.query, (err, data) => {
-            if(data) {
-                res.json(data)
+        nlpAnalyse(reqData.query, (err, data) => {
+            if(err) {
+                const botTask = {
+                    task: BotTasksType.REPORT_ERROR,
+                    data: {
+                        message: `Sorry I could not understand: ${reqData.query}, try something else`
+                    }
+                }
+                res.json(messageGenerator(botTask))
             } else {
-                res.json(err)
+                const botTask = processNLPResult(data)
+                // Determinde messages for bot task to send
+                res.json(messageGenerator(botTask))
             }
         })
         return
     }
+
+    // User selected predefined action
+    if (requestCode === 'dayFirstLaunch') {
+        res.json(messageGenerator({
+            task: BotTasksType.DAY_FIRST_LAUNCH_OPTION,
+        }))
+        return
+    }
+
+    // Error response
     res.send('I am going to serve you in a much better way')
 }
-
 
 module.exports = {
     requestNext,
