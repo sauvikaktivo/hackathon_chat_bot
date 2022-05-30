@@ -57,7 +57,47 @@ class GridCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor(red: 0.859, green: 0.871, blue: 0.882, alpha: 1).cgColor
     }
 }
-
+class UserMessageCell: UICollectionViewCell {
+    static let identifier = "UserMessageCell"
+    lazy var textLabel: UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = UIFont.preferredFont(forTextStyle: .title1)
+        l.textColor = UIColor.userMessageText
+        l.numberOfLines = 0
+        l.lineBreakMode = .byWordWrapping
+        l.textAlignment = .right
+        return l
+    }()
+    lazy var bottomLine: UIView = {
+        let l = UIView()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.backgroundColor = UIColor.userMessageText
+        return l
+    }()
+    lazy var stack: UIStackView = {
+        let s = UIStackView(arrangedSubviews: [textLabel, bottomLine])
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.axis = .vertical
+        s.distribution = .fill
+        s.spacing = 8
+        NSLayoutConstraint.activate([
+            bottomLine.heightAnchor.constraint(equalToConstant: 2)
+        ])
+        return s
+    }()
+    func configure(item: ChatBotItem) {
+        guard case .userMessage(let model) = item else { return }
+        contentView.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+        textLabel.text = model.msg
+    }
+}
 
 class BotMessageCell: UICollectionViewCell {
     static let identifier = "BotMessageCell"
@@ -143,6 +183,7 @@ class QuickActionCell: UICollectionViewCell {
 
 
 extension UIColor {
+    static let userMessageText = UIColor(red: 0.0/255.0, green: 98/255.0, blue: 188.0/255.0, alpha: 1)
     static let chatBotMessage = UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1)
     static let quickActionBorderColor = UIColor(red: 219/255.0, green: 222/255.0, blue: 225/255.0, alpha: 1)
     static let quickActionTextColor = UIColor(red: 53/255.0, green: 129/255.0, blue: 184/255.0, alpha: 1)

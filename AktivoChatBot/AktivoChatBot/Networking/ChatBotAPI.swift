@@ -48,7 +48,7 @@ struct ChatBotServerEndPoint {
 let baseUrl = "http://localhost:3000"
 extension ChatBotServerEndPoint {
     static func userInputText(text: String) -> Self {
-        let request = ChatBotRequest(type: .typedText, data: nil)
+        let request = ChatBotRequest(type: .typedText, data: ["query": text as AnyObject])
         return ChatBotServerEndPoint(request: request, path: "/api/v1/chatbot", method: "POST")
     }
     static func dayFirstLaunch() -> Self {

@@ -17,6 +17,22 @@ class ChatController {
         guard sectionIndex < sections.count else { return nil }
         return sections[sectionIndex]
     }
+    func indexPathForLastItem() -> IndexPath? {
+        guard sections.count > 0 else { return nil }
+        let sectionIndex = sections.count - 1
+        var itemIndex = 0
+        switch sections.last! {
+        case .titleGridLayout(let model):
+            itemIndex = model.grid.items.count - 1
+        case .botMessages(let model):
+            itemIndex = model.msgCount - 1
+        case .userMessage:
+            itemIndex = 0
+        case .quickActionOptions(let model):
+            itemIndex = model.actionCount - 1
+        }
+        return IndexPath(item: itemIndex, section: sectionIndex)
+    }
     func loadDayFirstLaunchConfig() {
         // API Test Code
         API<ChatBotResponse>.load(endPoint: ChatBotServerEndPoint.dayFirstLaunch())
@@ -43,6 +59,28 @@ class ChatController {
         }
         guard let taskId = chatBotAction else { return }
         API<ChatBotResponse>.load(endPoint: ChatBotServerEndPoint.quickAction(taskId: taskId))
+            .sink(receiveCompletion: { state in
+                switch state {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("API Load error: \(error)")
+                }
+            }, receiveValue: { [weak self] result in
+                guard let self = self else { return }
+                self.updateSectionInfo(result)
+                self.view?.applySnapshot(animateDiff: true)
+            }).store(in: &disposables)
+    }
+    func reportUserRequest(text: String?) {
+        guard let text = text else { return }
+        
+        // Insert new section to show user input
+        sections.append(ChatBotSection.userMessage(sectionModel: UserMessageSection(item: UserMessageItem(msg: text))))
+        self.view?.applySnapshot(animateDiff: true)
+        
+        // Server call to get user intent
+        API<ChatBotResponse>.load(endPoint: ChatBotServerEndPoint.userInputText(text: text))
             .sink(receiveCompletion: { state in
                 switch state {
                 case .finished:

@@ -19,9 +19,12 @@
 		458263F12844233A0074A9D8 /* ChatBotUIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263F02844233A0074A9D8 /* ChatBotUIModels.swift */; };
 		458263F32844248D0074A9D8 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263F22844248D0074A9D8 /* ChatController.swift */; };
 		458263F628442ADB0074A9D8 /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263F528442ADB0074A9D8 /* Cells.swift */; };
+		458263F9284516E30074A9D8 /* ChatMessageComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458263F8284516E30074A9D8 /* ChatMessageComposeView.swift */; };
+		5109A9E23D15001F83D6630C /* Pods_AktivoChatBot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9EE527CCF1BD61454AC5E5 /* Pods_AktivoChatBot.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1001CEAE384EC2B6EBF1056B /* Pods-AktivoChatBot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AktivoChatBot.debug.xcconfig"; path = "Target Support Files/Pods-AktivoChatBot/Pods-AktivoChatBot.debug.xcconfig"; sourceTree = "<group>"; };
 		458263CE284408FE0074A9D8 /* AktivoChatBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AktivoChatBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		458263D1284408FE0074A9D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		458263D3284408FE0074A9D8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +39,9 @@
 		458263F02844233A0074A9D8 /* ChatBotUIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotUIModels.swift; sourceTree = "<group>"; };
 		458263F22844248D0074A9D8 /* ChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		458263F528442ADB0074A9D8 /* Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cells.swift; sourceTree = "<group>"; };
+		458263F8284516E30074A9D8 /* ChatMessageComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageComposeView.swift; sourceTree = "<group>"; };
+		59C0D45A76CA20354013209A /* Pods-AktivoChatBot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AktivoChatBot.release.xcconfig"; path = "Target Support Files/Pods-AktivoChatBot/Pods-AktivoChatBot.release.xcconfig"; sourceTree = "<group>"; };
+		5A9EE527CCF1BD61454AC5E5 /* Pods_AktivoChatBot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AktivoChatBot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,17 +49,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5109A9E23D15001F83D6630C /* Pods_AktivoChatBot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BF144E86D0805B149BE166F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5A9EE527CCF1BD61454AC5E5 /* Pods_AktivoChatBot.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		458263C5284408FE0074A9D8 = {
 			isa = PBXGroup;
 			children = (
 				458263D0284408FE0074A9D8 /* AktivoChatBot */,
 				458263CF284408FE0074A9D8 /* Products */,
+				BF2A31BD4905E05DA78D7DB0 /* Pods */,
+				3BF144E86D0805B149BE166F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +85,7 @@
 		458263D0284408FE0074A9D8 /* AktivoChatBot */ = {
 			isa = PBXGroup;
 			children = (
+				458263F7284516C50074A9D8 /* Views */,
 				458263E928440A720074A9D8 /* Networking */,
 				458263E52844091E0074A9D8 /* ChatViewController */,
 				458263D1284408FE0074A9D8 /* AppDelegate.swift */,
@@ -117,6 +135,23 @@
 			path = ChatCells;
 			sourceTree = "<group>";
 		};
+		458263F7284516C50074A9D8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				458263F8284516E30074A9D8 /* ChatMessageComposeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BF2A31BD4905E05DA78D7DB0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1001CEAE384EC2B6EBF1056B /* Pods-AktivoChatBot.debug.xcconfig */,
+				59C0D45A76CA20354013209A /* Pods-AktivoChatBot.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -124,9 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 458263E2284409000074A9D8 /* Build configuration list for PBXNativeTarget "AktivoChatBot" */;
 			buildPhases = (
+				DEABCD98ED06D75A91373C8C /* [CP] Check Pods Manifest.lock */,
 				458263CA284408FE0074A9D8 /* Sources */,
 				458263CB284408FE0074A9D8 /* Frameworks */,
 				458263CC284408FE0074A9D8 /* Resources */,
+				EBA56DD09D716E918A385299 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -183,6 +220,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DEABCD98ED06D75A91373C8C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AktivoChatBot-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBA56DD09D716E918A385299 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AktivoChatBot/Pods-AktivoChatBot-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AktivoChatBot/Pods-AktivoChatBot-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AktivoChatBot/Pods-AktivoChatBot-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		458263CA284408FE0074A9D8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -197,6 +276,7 @@
 				458263F12844233A0074A9D8 /* ChatBotUIModels.swift in Sources */,
 				458263F32844248D0074A9D8 /* ChatController.swift in Sources */,
 				458263F628442ADB0074A9D8 /* Cells.swift in Sources */,
+				458263F9284516E30074A9D8 /* ChatMessageComposeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +420,7 @@
 		};
 		458263E3284409000074A9D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1001CEAE384EC2B6EBF1056B /* Pods-AktivoChatBot.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -368,6 +449,7 @@
 		};
 		458263E4284409000074A9D8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59C0D45A76CA20354013209A /* Pods-AktivoChatBot.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

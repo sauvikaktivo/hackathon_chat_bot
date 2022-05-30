@@ -11,6 +11,7 @@ import Foundation
 enum ChatBotSection: Hashable {
     case titleGridLayout(sectionModel: TitleGridLayoutSection)
     case botMessages(sectionModel: BotMessagesSection)
+    case userMessage(sectionModel: UserMessageSection)
     case quickActionOptions(sectionModel: QuickActionSection)
 }
 
@@ -28,6 +29,13 @@ struct BotMessagesSection {
     let msgs: [Message]
     init(messages: [Message]) {
         self.msgs = messages
+    }
+}
+struct UserMessageSection {
+    let id = UUID()
+    let item: UserMessageItem
+    init(item: UserMessageItem) {
+        self.item = item
     }
 }
 struct QuickActionSection {
@@ -54,6 +62,14 @@ extension BotMessagesSection: Hashable {
         hasher.combine(id)
     }
 }
+extension UserMessageSection: Hashable {
+    static func == (lhs: UserMessageSection, rhs: UserMessageSection) -> Bool {
+        lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
 extension QuickActionSection: Hashable {
     static func == (lhs: QuickActionSection, rhs: QuickActionSection) -> Bool {
         lhs.id == rhs.id
@@ -67,6 +83,7 @@ extension QuickActionSection: Hashable {
 enum ChatBotItem: Hashable {
     case titleGridItem(item: ChatBotGridItem)
     case botMessage(item: ChatBotMessageItem)
+    case userMessage(item: UserMessageItem)
     case quickAction(item: ChatBotQuickActionItem)
 }
 
@@ -78,6 +95,10 @@ struct ChatBotGridItem {
 struct ChatBotMessageItem {
     let id = UUID()
     let msg: Message
+}
+struct UserMessageItem {
+    let id = UUID()
+    let msg: String
 }
 struct ChatBotQuickActionItem {
     let id = UUID()
@@ -94,6 +115,14 @@ extension ChatBotGridItem: Hashable {
 }
 extension ChatBotQuickActionItem: Hashable {
     static func == (lhs: ChatBotQuickActionItem, rhs: ChatBotQuickActionItem) -> Bool {
+        lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+extension UserMessageItem: Hashable {
+    static func == (lhs: UserMessageItem, rhs: UserMessageItem) -> Bool {
         lhs.id == rhs.id
     }
     func hash(into hasher: inout Hasher) {

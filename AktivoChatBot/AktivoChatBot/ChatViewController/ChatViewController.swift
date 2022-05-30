@@ -16,6 +16,12 @@ class ChatViewController: UIViewController {
         cv.backgroundColor = .white
         return cv
     }()
+    private lazy var chatMsgBox: ChatMessageComposeView = {
+        let b = ChatMessageComposeView()
+        b.translatesAutoresizingMaskIntoConstraints = false
+        b.delegate = self
+        return b
+    }()
     let controller = ChatController()
     var dataSource: UICollectionViewDiffableDataSource<ChatBotSection, ChatBotItem>! = nil
 
@@ -33,13 +39,20 @@ class ChatViewController: UIViewController {
     
     func configLayout() {
         view.backgroundColor = .systemBackground
+        view.addSubview(chatMsgBox)
+        NSLayoutConstraint.activate([
+            chatMsgBox.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            chatMsgBox.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            chatMsgBox.heightAnchor.constraint(equalToConstant: 60),
+            chatMsgBox.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
         view.addSubview(collectionView)
         collectionView.delegate = self
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: chatMsgBox.topAnchor),
         ])
     }
     func configureDataSource() {
@@ -48,6 +61,9 @@ class ChatViewController: UIViewController {
             cell.configure(item: item)
         }
         let botMessageCellRegistration = UICollectionView.CellRegistration<BotMessageCell, ChatBotItem> { (cell, indexPath, item) in
+            cell.configure(item: item)
+        }
+        let userMessageCellRegistration = UICollectionView.CellRegistration<UserMessageCell, ChatBotItem> { (cell, indexPath, item) in
             cell.configure(item: item)
         }
         let quickActionCellRegistration = UICollectionView.CellRegistration<QuickActionCell, ChatBotItem> { (cell, indexPath, item) in
@@ -64,6 +80,8 @@ class ChatViewController: UIViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: gridActionCellRegistration, for: indexPath, item: item)
             case .botMessages:
                 return collectionView.dequeueConfiguredReusableCell(using: botMessageCellRegistration, for: indexPath, item: item)
+            case .userMessage:
+                return collectionView.dequeueConfiguredReusableCell(using: userMessageCellRegistration, for: indexPath, item: item)
             case .quickActionOptions:
                 return collectionView.dequeueConfiguredReusableCell(using: quickActionCellRegistration, for: indexPath, item: item)
             }
@@ -81,11 +99,16 @@ class ChatViewController: UIViewController {
                 snapshot.appendItems(model.grid.items.map { ChatBotItem.titleGridItem(item: ChatBotGridItem(item: $0)) }, toSection: section)
             case .botMessages(let model):
                 snapshot.appendItems(model.msgs.map { ChatBotItem.botMessage(item: ChatBotMessageItem(msg: $0)) }, toSection: section)
+            case .userMessage(let model):
+                snapshot.appendItems([ChatBotItem.userMessage(item: UserMessageItem(msg: model.item.msg))], toSection: section)
             case .quickActionOptions(let model):
                 snapshot.appendItems(model.actions.map { ChatBotItem.quickAction(item: ChatBotQuickActionItem(action: $0)) }, toSection: section)
             }
         }
-        dataSource.apply(snapshot, animatingDifferences: animateDiff)
+        dataSource.apply(snapshot, animatingDifferences: animateDiff) { [weak self] in
+            guard let lastItem = self?.controller.indexPathForLastItem() else { return }
+            self?.collectionView.scrollToItem(at: lastItem, at: .bottom, animated: animateDiff)
+        }
     }
     
     func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -119,6 +142,18 @@ class ChatViewController: UIViewController {
                 let msgSection = NSCollectionLayoutSection(group: msgGroup)
                 msgSection.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
                 return msgSection
+            case .userMessage:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                      heightDimension: .estimated(60))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                       heightDimension: .estimated(60))
+                let msgGroup = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
+                let msgSection = NSCollectionLayoutSection(group: msgGroup)
+                msgSection.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+                return msgSection
             case .quickActionOptions(let model):
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                       heightDimension: .absolute(68))
@@ -147,6 +182,12 @@ extension ChatViewController : QuickActionCellDelegate {
     func didTapOnQuickActionButton(indexPath: IndexPath) {
         guard let itemTapped = dataSource.itemIdentifier(for: indexPath) else { return }
         controller.reportQuickAction(item: itemTapped)
+    }
+}
+extension ChatViewController : ChatMessageComposeViewDelegate {
+    func chatMessageComposer(_ view: ChatMessageComposeView, didTapSendButton button: UIButton) {
+        controller.reportUserRequest(text: view.textField.text)
+        view.reset()
     }
 }
 
