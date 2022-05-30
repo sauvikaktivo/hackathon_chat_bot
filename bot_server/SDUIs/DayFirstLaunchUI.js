@@ -24,12 +24,12 @@ const DayFirstLaunchUI = {
                 },
                 {
                     title: 'Meditaion',
-                    imageUrl: '/public/resources/icons/meditaion.png',
+                    imageUrl: '/public/resources/icons/meditation.png',
                     botTaskId: BotTasksType.MEDITATION_INFO
                 },
                 {
                     title: 'Mind Article',
-                    imageUrl: '/public/resources/icons/mind_article.png',
+                    imageUrl: '/public/resources/icons/mind_articles.png',
                     botTaskId: BotTasksType.SHOW_MIND_ARTICLE
                 },
                 {
