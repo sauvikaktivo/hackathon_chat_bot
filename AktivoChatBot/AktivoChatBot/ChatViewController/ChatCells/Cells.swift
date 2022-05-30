@@ -163,13 +163,13 @@ class QuickActionCell: UICollectionViewCell {
         guard case .quickAction(let model) = item else { return }
         self.indexPath = indexPath
         contentView.addSubview(button)
+        button.setTitle(model.action.buttonTitle, for: .normal)
         NSLayoutConstraint.activate([
             button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 8),
             button.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
         ])
-        button.setTitle(model.action.buttonTitle, for: .normal)
     }
     @objc
     func buttonTapped() {
