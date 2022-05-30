@@ -99,9 +99,13 @@ class BotMessageCell: UICollectionViewCell {
     }
 }
 
-
+protocol QuickActionCellDelegate: AnyObject {
+    func didTapOnQuickActionButton(indexPath: IndexPath)
+}
 class QuickActionCell: UICollectionViewCell {
     static let identifier = "QuickActionCell"
+    weak var delegate: QuickActionCellDelegate?
+    var indexPath: IndexPath?
     lazy var button: UIButton = {
         let b = UIButton()
         b.translatesAutoresizingMaskIntoConstraints = false
@@ -112,10 +116,12 @@ class QuickActionCell: UICollectionViewCell {
         b.layer.borderColor = UIColor.quickActionBorderColor.cgColor
         b.setTitleColor(UIColor.quickActionTextColor, for: .normal)
         b.setTitleColor(UIColor.quickActionTextColor.withAlphaComponent(0.7), for: .highlighted)
+        b.addTarget(self, action: #selector(self.buttonTapped), for: .touchUpInside)
         return b
     }()
-    func configure(item: ChatBotItem) {
+    func configure(item: ChatBotItem, indexPath: IndexPath) {
         guard case .quickAction(let model) = item else { return }
+        self.indexPath = indexPath
         contentView.addSubview(button)
         NSLayoutConstraint.activate([
             button.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
@@ -124,6 +130,14 @@ class QuickActionCell: UICollectionViewCell {
             button.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
         ])
         button.setTitle(model.action.buttonTitle, for: .normal)
+    }
+    @objc
+    func buttonTapped() {
+        guard let indexPath = indexPath else {
+            return
+        }
+        delegate?.didTapOnQuickActionButton(indexPath: indexPath)
+
     }
 }
 

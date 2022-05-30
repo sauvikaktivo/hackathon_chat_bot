@@ -10,7 +10,6 @@ import Combine
 
 class ChatViewController: UIViewController {
 
-    private lazy var disposables = Set<AnyCancellable>()
     private lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -28,26 +27,8 @@ class ChatViewController: UIViewController {
         configureDataSource()
         
         // API Test Code
-        API<ChatBotResponse>.load(endPoint: ChatBotServerEndPoint.dayFirstLaunch())
-            .sink(receiveCompletion: { state in
-                switch state {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("API Load error: \(error)")
-                }
-            }, receiveValue: { result in
-                if let gridItems = result.layout?.layout?.grid {
-                    self.controller.sections.append(ChatBotSection.titleGridLayout(sectionModel: TitleGridLayoutSection(grid: gridItems)))
-                }
-                if let msgs = result.messages {
-                    self.controller.sections.append(ChatBotSection.botMessages(sectionModel: BotMessagesSection(messages: msgs)))
-                }
-                if let quickActions = result.quickActions {
-                    self.controller.sections.append(ChatBotSection.quickActionOptions(sectionModel: QuickActionSection(actions: quickActions)))
-                }
-                self.configureDataSource()
-            }).store(in: &disposables)
+        controller.view = self
+        controller.loadDayFirstLaunchConfig()
     }
     
     func configLayout() {
@@ -70,7 +51,8 @@ class ChatViewController: UIViewController {
             cell.configure(item: item)
         }
         let quickActionCellRegistration = UICollectionView.CellRegistration<QuickActionCell, ChatBotItem> { (cell, indexPath, item) in
-            cell.configure(item: item)
+            cell.delegate = self
+            cell.configure(item: item, indexPath: indexPath)
         }
         
         dataSource = UICollectionViewDiffableDataSource<ChatBotSection, ChatBotItem>(collectionView: collectionView) {
@@ -127,7 +109,7 @@ class ChatViewController: UIViewController {
                 return section
             case .botMessages(let model):
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                      heightDimension: .estimated(200))
+                                                      heightDimension: .estimated(100))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
 
@@ -156,5 +138,15 @@ class ChatViewController: UIViewController {
 }
 
 extension ChatViewController : UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let itemTapped = dataSource.itemIdentifier(for: indexPath) else { return }
+        controller.reportQuickAction(item: itemTapped)
+    }
 }
+extension ChatViewController : QuickActionCellDelegate {
+    func didTapOnQuickActionButton(indexPath: IndexPath) {
+        guard let itemTapped = dataSource.itemIdentifier(for: indexPath) else { return }
+        controller.reportQuickAction(item: itemTapped)
+    }
+}
+

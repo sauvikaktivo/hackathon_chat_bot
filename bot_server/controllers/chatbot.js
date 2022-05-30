@@ -65,6 +65,21 @@ const requestNext = async(req, res) => {
         return
     }
 
+    // User selected predefined action
+    if (requestCode === 'quickAction') {
+        const botTask = {
+            task: reqData.botTaskId,
+        }
+        const messages = messageGenerator(botTask)
+        const quickActions = quickActionGenerator(botTask)
+        res.json({
+            // TODO: Inject layout might be empty
+            messages: messages,
+            quickActions: quickActions
+        })
+        return
+    }
+
     // Error response
     res.send('I am going to serve you in a much better way. IN FUTURE...:)')
 }

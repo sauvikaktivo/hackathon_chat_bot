@@ -15,7 +15,7 @@ const DayFirstLaunchUI = {
                 {
                     title: 'Add Weight',
                     imageUrl: '/public/resources/icons/add_weight.png',
-                    botTaskId: BotTasksType.ADD_WEIGHT
+                    botTaskId: BotTasksType.WEIGHT_INFO
                 },
                 {
                     title: 'Exercise',

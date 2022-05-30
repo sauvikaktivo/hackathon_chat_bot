@@ -13,7 +13,7 @@ const quickActionGenerator = (botTask) => {
         ]
     } else if (botTask.task === BotTasksType.DAY_FIRST_LAUNCH_OPTION) {
         return [
-            { buttonTitle: 'Add Weight', botTaskId: BotTasksType.ADD_WEIGHT },
+            { buttonTitle: 'Add Weight', botTaskId: BotTasksType.WEIGHT_INFO },
             { buttonTitle: 'Show Mind Article', botTaskId: BotTasksType.SHOW_MIND_ARTICLE },
         ]
     } else {
