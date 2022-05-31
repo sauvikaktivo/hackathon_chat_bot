@@ -60,6 +60,11 @@ class ChatController {
         default: return
         }
         guard let taskId = chatBotAction else { return }
+        if taskId == 2, let weightInput = view?.currentWeightInput { // save weight
+            // Insert new section to show user input
+            sections.append(ChatBotSection.userMessage(sectionModel: UserMessageSection(item: UserMessageItem(msg: "\(weightInput)"))))
+            self.view?.applySnapshot(animateDiff: true)
+        }
         API<ChatBotResponse>.load(endPoint: ChatBotServerEndPoint.quickAction(taskId: taskId))
             .sink(receiveCompletion: { state in
                 switch state {

@@ -10,6 +10,7 @@ import Combine
 
 class ChatViewController: UIViewController {
 
+    var currentWeightInput: Double?
     private lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -194,6 +195,13 @@ extension ChatViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let itemTapped = dataSource.itemIdentifier(for: indexPath) else { return }
         controller.reportQuickAction(item: itemTapped)
+    }
+}
+extension ChatViewController: AddWeightCellDelegate {
+    func addWeightCell(_ cell: AddWeightCell, didChange weightText: String?) {
+        guard let weightText = weightText else { return }
+        currentWeightInput = Double(weightText)
+        print (cell.unitToggle.selectedSegmentIndex == 0 ? "KG": "LBS")
     }
 }
 extension ChatViewController : QuickActionCellDelegate {

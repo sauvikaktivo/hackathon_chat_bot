@@ -180,9 +180,12 @@ final class QuickActionCell: UICollectionViewCell {
 
     }
 }
-
+protocol AddWeightCellDelegate: AnyObject {
+    func addWeightCell(_ cell:AddWeightCell, didChange weightText: String?)
+}
 final class AddWeightCell: UICollectionViewCell {
     static let identifier = "AddWeightCell"
+    weak var delegate: AddWeightCellDelegate?
     lazy var iconImage: UIImageView = {
         let i = UIImageView(image: UIImage(named: "weight_scale"))
         i.translatesAutoresizingMaskIntoConstraints = false
@@ -218,11 +221,13 @@ final class AddWeightCell: UICollectionViewCell {
         return f
     }()
     lazy var unitToggle: UISegmentedControl = {
-        let kg = UIAction(title: "KG", state: .off, handler: { action in
-
+        let kg = UIAction(title: "KG", state: .off, handler: { [weak self] action in
+            guard let self = self else { return }
+            self.delegate?.addWeightCell(self, didChange: self.textInputField.text)
         })
-        let sbs = UIAction(title: "LBS", state: .off, handler: { action in
-
+        let sbs = UIAction(title: "LBS", state: .off, handler: { [weak self] action in
+            guard let self = self else { return }
+            self.delegate?.addWeightCell(self, didChange: self.textInputField.text)
         })
         let s = UISegmentedControl(items: [kg, sbs])
         s.selectedSegmentIndex = 0
@@ -258,7 +263,13 @@ final class AddWeightCell: UICollectionViewCell {
         ])
     }
 }
-
+extension AddWeightCell: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let finalText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
+        delegate?.addWeightCell(self, didChange: finalText)
+        return true
+    }
+}
 
 extension UIColor {
     static let toggleButtonSelectedColor = UIColor(red: 53/255.0, green: 129/255.0, blue: 184/255.0, alpha: 1)
