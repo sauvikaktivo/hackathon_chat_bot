@@ -14,9 +14,14 @@ struct ChatBotResponse: Decodable {
     let quickActions: [QuickAction]?
 }
 
+enum ChatBotServerUIType: String,Decodable {
+    case firstLaunchGrid
+    case addWeightUI
+}
 // MARK: - ChatBotServerUI
 struct ChatBotServerUI: Decodable {
     let id: String
+    let type: ChatBotServerUIType
     let layout: Layout?
 }
 

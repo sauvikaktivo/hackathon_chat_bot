@@ -24,6 +24,8 @@ class ChatController {
         switch sections.last! {
         case .titleGridLayout(let model):
             itemIndex = model.grid.items.count - 1
+        case .addWeight:
+            itemIndex = 0
         case .botMessages(let model):
             itemIndex = model.msgCount - 1
         case .userMessage:
@@ -95,12 +97,28 @@ class ChatController {
             }).store(in: &disposables)
     }
     func updateSectionInfo(_ response: ChatBotResponse) {
-        if let gridItems = response.layout?.layout?.grid {
-            self.sections.append(ChatBotSection.titleGridLayout(sectionModel: TitleGridLayoutSection(grid: gridItems)))
+        
+        // Check for incoming server driven layout items
+        if let layoutType = response.layout?.type {
+            switch layoutType {
+                
+            // Need to present an option grid
+            case .firstLaunchGrid:
+                if let gridItem = response.layout?.layout?.grid {
+                    self.sections.append(ChatBotSection.titleGridLayout(sectionModel: TitleGridLayoutSection(grid: gridItem)))
+                }
+             
+            // Need to present weight input UI
+            case .addWeightUI:
+                self.sections.append(ChatBotSection.addWeight(sectionModel: ChatBotItem.addWeightItem(item: ChatBotAddWeightItem())))
+            }
         }
+        // Check for incoming bot message, add them in a new section
         if let msgs = response.messages {
             self.sections.append(ChatBotSection.botMessages(sectionModel: BotMessagesSection(messages: msgs)))
         }
+        
+        // Check for quick action buttons, add them in new section
         if let quickActions = response.quickActions {
             self.sections.append(ChatBotSection.quickActionOptions(sectionModel: QuickActionSection(actions: quickActions)))
         }

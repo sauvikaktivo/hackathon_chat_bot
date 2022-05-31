@@ -70,6 +70,9 @@ class ChatViewController: UIViewController {
             cell.delegate = self
             cell.configure(item: item, indexPath: indexPath)
         }
+        let addWeightCellRegistration = UICollectionView.CellRegistration<AddWeightCell, ChatBotItem> { (cell, indexPath, item) in
+            cell.configure(item: item)
+        }
         
         dataSource = UICollectionViewDiffableDataSource<ChatBotSection, ChatBotItem>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, item: ChatBotItem) -> UICollectionViewCell? in
@@ -78,6 +81,8 @@ class ChatViewController: UIViewController {
             switch sectionType {
             case .titleGridLayout:
                 return collectionView.dequeueConfiguredReusableCell(using: gridActionCellRegistration, for: indexPath, item: item)
+            case .addWeight:
+                return collectionView.dequeueConfiguredReusableCell(using: addWeightCellRegistration, for: indexPath, item: item)
             case .botMessages:
                 return collectionView.dequeueConfiguredReusableCell(using: botMessageCellRegistration, for: indexPath, item: item)
             case .userMessage:
@@ -97,6 +102,8 @@ class ChatViewController: UIViewController {
             switch section {
             case .titleGridLayout(let model):
                 snapshot.appendItems(model.grid.items.map { ChatBotItem.titleGridItem(item: ChatBotGridItem(item: $0)) }, toSection: section)
+            case .addWeight:
+                snapshot.appendItems([.addWeightItem(item: ChatBotAddWeightItem())], toSection: section)
             case .botMessages(let model):
                 snapshot.appendItems(model.msgs.map { ChatBotItem.botMessage(item: ChatBotMessageItem(msg: $0)) }, toSection: section)
             case .userMessage(let model):
@@ -130,6 +137,17 @@ class ChatViewController: UIViewController {
                 let section = NSCollectionLayoutSection(group: singleLineGroup)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
                 return section
+            case .addWeight:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                      heightDimension: .estimated(200))
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 6, bottom: 6, trailing: 6)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                       heightDimension: .estimated(200))
+                let singleLineGroup = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+                let section = NSCollectionLayoutSection(group: singleLineGroup)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+                return section
             case .botMessages:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                       heightDimension: .estimated(100))
@@ -156,11 +174,11 @@ class ChatViewController: UIViewController {
                 return msgSection
             case .quickActionOptions(let model):
                 let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(40),
-                                                      heightDimension: .absolute(68))
+                                                      heightDimension: .absolute(50))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                       heightDimension: .absolute(68))
+                                                       heightDimension: .absolute(50))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: model.actionCount)
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)

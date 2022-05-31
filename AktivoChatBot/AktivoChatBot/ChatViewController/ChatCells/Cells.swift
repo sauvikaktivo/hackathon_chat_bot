@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GridCell: UICollectionViewCell {
+final class GridCell: UICollectionViewCell {
     static let identifier = "GridCell"
     lazy var title: UILabel = {
         let l = UILabel()
@@ -57,7 +57,7 @@ class GridCell: UICollectionViewCell {
         contentView.layer.borderColor = UIColor(red: 0.859, green: 0.871, blue: 0.882, alpha: 1).cgColor
     }
 }
-class UserMessageCell: UICollectionViewCell {
+final class UserMessageCell: UICollectionViewCell {
     static let identifier = "UserMessageCell"
     lazy var textLabel: UILabel = {
         let l = UILabel()
@@ -99,7 +99,7 @@ class UserMessageCell: UICollectionViewCell {
     }
 }
 
-class BotMessageCell: UICollectionViewCell {
+final class BotMessageCell: UICollectionViewCell {
     static let identifier = "BotMessageCell"
     lazy var textLabel: UILabel = {
         let l = UILabel()
@@ -142,7 +142,7 @@ class BotMessageCell: UICollectionViewCell {
 protocol QuickActionCellDelegate: AnyObject {
     func didTapOnQuickActionButton(indexPath: IndexPath)
 }
-class QuickActionCell: UICollectionViewCell {
+final class QuickActionCell: UICollectionViewCell {
     static let identifier = "QuickActionCell"
     weak var delegate: QuickActionCellDelegate?
     var indexPath: IndexPath?
@@ -151,7 +151,7 @@ class QuickActionCell: UICollectionViewCell {
         b.translatesAutoresizingMaskIntoConstraints = false
         b.backgroundColor = .secondarySystemBackground
         b.layer.borderWidth = 1.0
-        b.layer.cornerRadius = 28
+        b.layer.cornerRadius = 18
         b.backgroundColor = .white
         b.layer.borderColor = UIColor.quickActionBorderColor.cgColor
         b.setTitleColor(UIColor.quickActionTextColor, for: .normal)
@@ -181,8 +181,87 @@ class QuickActionCell: UICollectionViewCell {
     }
 }
 
+final class AddWeightCell: UICollectionViewCell {
+    static let identifier = "AddWeightCell"
+    lazy var iconImage: UIImageView = {
+        let i = UIImageView(image: UIImage(named: "weight_scale"))
+        i.translatesAutoresizingMaskIntoConstraints = false
+        return i
+    }()
+    lazy var iconTitle: UILabel = {
+        let l = UILabel()
+        l.translatesAutoresizingMaskIntoConstraints = false
+        l.font = UIFont.preferredFont(forTextStyle: .title3)
+        l.textColor = .label
+        l.textAlignment = .center
+        l.text = "Weight"
+        return l
+    }()
+    lazy var topStack: UIStackView = {
+        let s = UIStackView(arrangedSubviews: [iconImage, iconTitle])
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.axis = .vertical
+        s.alignment = .center
+        s.spacing = 16
+        NSLayoutConstraint.activate([
+            iconImage.widthAnchor.constraint(equalToConstant: 42),
+            iconImage.heightAnchor.constraint(equalToConstant: 42)
+        ])
+        return s
+    }()
+    lazy var textInputField: UITextField = {
+        let f = UITextField()
+        f.textAlignment = .right
+        f.translatesAutoresizingMaskIntoConstraints = false
+        f.borderStyle = .roundedRect
+        f.keyboardType = .numberPad
+        return f
+    }()
+    lazy var unitToggle: UISegmentedControl = {
+        let kg = UIAction(title: "KG", state: .off, handler: { action in
+
+        })
+        let sbs = UIAction(title: "LBS", state: .off, handler: { action in
+
+        })
+        let s = UISegmentedControl(items: [kg, sbs])
+        s.selectedSegmentIndex = 0
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.selectedSegmentTintColor = UIColor.toggleButtonSelectedColor
+        return s
+    }()
+    lazy var hStack: UIStackView = {
+        let s = UIStackView(arrangedSubviews: [textInputField, unitToggle])
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.axis = .horizontal
+        s.distribution = .fillEqually
+        s.spacing = 16
+        return s
+    }()
+    lazy var stack: UIStackView = {
+        let s = UIStackView(arrangedSubviews: [topStack, hStack])
+        s.translatesAutoresizingMaskIntoConstraints = false
+        s.axis = .vertical
+        s.alignment = .center
+        s.spacing = 26
+        return s
+    }()
+    
+    func configure(item: ChatBotItem) {
+        guard case .addWeightItem = item else { return }
+        contentView.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
+            stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+        ])
+    }
+}
+
 
 extension UIColor {
+    static let toggleButtonSelectedColor = UIColor(red: 53/255.0, green: 129/255.0, blue: 184/255.0, alpha: 1)
     static let userMessageText = UIColor(red: 0.0/255.0, green: 98/255.0, blue: 188.0/255.0, alpha: 1)
     static let chatBotMessage = UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1)
     static let quickActionBorderColor = UIColor(red: 219/255.0, green: 222/255.0, blue: 225/255.0, alpha: 1)

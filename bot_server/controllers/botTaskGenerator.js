@@ -6,6 +6,7 @@ const BotTasksType = {
     // All weight module tasks
     WEIGHT_INFO: 0,
     ADD_WEIGHT: 1,
+    SAVE_WEIGHT: 2,
     // More task id for Weight module
 
     // All sleep module tasks

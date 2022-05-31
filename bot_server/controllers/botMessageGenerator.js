@@ -13,13 +13,20 @@ const messageGenerator = (botTask) => {
     }
     if (botTask.task === BotTasksType.WEIGHT_INFO) {
         const messages = []
-        AddWeightMessages.forEach( (msg) => {
+        WeightInfoMessages.forEach( (msg) => {
             messages.push({
                 message: msg,
                 createdAt: DateToString()
             })
         })
         return messages
+    } else if (botTask.task === BotTasksType.SAVE_WEIGHT) {
+        return [
+            {
+                message: WeightSaveMessage[0],
+                createdAt: DateToString()
+            }
+        ]
     } else if (botTask.task === BotTasksType.SLEEP_INFO) {
         return [
             {
@@ -36,21 +43,36 @@ const messageGenerator = (botTask) => {
             })
         })
         return messages
+    } else if (botTask.task === BotTasksType.ADD_WEIGHT) {
+        const messages = []
+        AddWeightMessages.forEach( (msg) => {
+            messages.push({
+                message: msg,
+                createdAt: DateToString()
+            })
+        })
+        return messages
     } else {
         // Generate Error Message
         return [
             {
-                message: botTask.data.message,
+                message: `Sorry I could not understand, try something else. \"Add weight\" or \"Enter weight\"`,
                 createdAt: DateToString()
             }
         ]
     }
 }
 
-const AddWeightMessages = [
+const WeightInfoMessages = [
     'Hi John',
     'Hope you are doing well',
     'We have your last updated weight of 75kg. Do you want to modify?'
+]
+const AddWeightMessages = [
+    'Please enter your present weight.'
+]
+const WeightSaveMessage = [
+    'Weight updated'
 ]
 const AppLaunchMessages = [
     'Great to see you back. You have few activities to complete today. Tap on above activies to start.'

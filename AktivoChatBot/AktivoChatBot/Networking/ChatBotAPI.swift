@@ -67,9 +67,17 @@ struct API<T: Decodable> {
         URLSession.shared.dataTaskPublisher(for: endPoint.networkRequest)
             .tryMap { result -> T in
                 do {
+                    if let string = String(data: result.data, encoding: .utf8) {
+                        print("=============================")
+                        print(string)
+                        print("=============================")
+                    }
                     let object = try decoder.decode(T.self, from: result.data)
                     return object
                 } catch {
+                    print("=============================")
+                    print(error)
+                    print("=============================")
                     throw error
                 }
             }

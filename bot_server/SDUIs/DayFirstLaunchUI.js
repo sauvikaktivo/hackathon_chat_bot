@@ -2,6 +2,7 @@ const { BotTasksType } = require('../controllers/botTaskGenerator')
 const getDayFirstLaunchUI = () => { return DayFirstLaunchUI }
 const DayFirstLaunchUI = {
     id: 'some_random_uuid',
+    type: 'firstLaunchGrid',
     layout: {
         text: {
             text: 'Today\'s Activities',
@@ -53,7 +54,13 @@ const DayFirstLaunchUI = {
 
 }
 
+const addWeightUI = {
+    id: 'some_random_uuid',
+    type: 'addWeightUI'
+}
+const getAddWeightUI = () => { return addWeightUI }
 
 module.exports = {
     getDayFirstLaunchUI,
+    getAddWeightUI,
 }

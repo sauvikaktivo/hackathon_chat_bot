@@ -10,6 +10,7 @@ import Foundation
 // MARK: Section Types
 enum ChatBotSection: Hashable {
     case titleGridLayout(sectionModel: TitleGridLayoutSection)
+    case addWeight(sectionModel: ChatBotItem)
     case botMessages(sectionModel: BotMessagesSection)
     case userMessage(sectionModel: UserMessageSection)
     case quickActionOptions(sectionModel: QuickActionSection)
@@ -82,6 +83,7 @@ extension QuickActionSection: Hashable {
 // MARK: Item Types
 enum ChatBotItem: Hashable {
     case titleGridItem(item: ChatBotGridItem)
+    case addWeightItem(item: ChatBotAddWeightItem)
     case botMessage(item: ChatBotMessageItem)
     case userMessage(item: UserMessageItem)
     case quickAction(item: ChatBotQuickActionItem)
@@ -91,7 +93,9 @@ struct ChatBotGridItem {
     let id = UUID()
     let item: Grid.Item
 }
-
+struct ChatBotAddWeightItem {
+    let id = UUID()
+}
 struct ChatBotMessageItem {
     let id = UUID()
     let msg: Message
@@ -107,6 +111,14 @@ struct ChatBotQuickActionItem {
 
 extension ChatBotGridItem: Hashable {
     static func == (lhs: ChatBotGridItem, rhs: ChatBotGridItem) -> Bool {
+        lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+extension ChatBotAddWeightItem: Hashable {
+    static func == (lhs: ChatBotAddWeightItem, rhs: ChatBotAddWeightItem) -> Bool {
         lhs.id == rhs.id
     }
     func hash(into hasher: inout Hasher) {

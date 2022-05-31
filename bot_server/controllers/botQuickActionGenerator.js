@@ -6,6 +6,10 @@ const quickActionGenerator = (botTask) => {
             { buttonTitle: 'Modify', botTaskId: BotTasksType.ADD_WEIGHT },
             { buttonTitle: 'My weight is same', botTaskId: BotTasksType.NO_ACTION },
         ]
+    } else if (botTask.task === BotTasksType.ADD_WEIGHT) {
+        return [
+            { buttonTitle: 'Save', botTaskId: BotTasksType.SAVE_WEIGHT },
+        ]
     } else if (botTask.task === BotTasksType.SLEEP_INFO) {
         return [
             { buttonTitle: 'Modify', botTaskId: BotTasksType.UPDATE_LAST_NIGHT_SLEEP },
