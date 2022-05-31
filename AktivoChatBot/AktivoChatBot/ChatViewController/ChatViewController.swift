@@ -73,6 +73,7 @@ class ChatViewController: UIViewController {
         }
         let addWeightCellRegistration = UICollectionView.CellRegistration<AddWeightCell, ChatBotItem> { (cell, indexPath, item) in
             cell.configure(item: item)
+            cell.delegate = self
         }
         
         dataSource = UICollectionViewDiffableDataSource<ChatBotSection, ChatBotItem>(collectionView: collectionView) {
