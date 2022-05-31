@@ -2,6 +2,15 @@ const {processNLPResult, BotTasksType } = require('../controllers/botTaskGenerat
 const {DateToString}= require('../utils/utils')
 
 const messageGenerator = (botTask) => {
+    if (botTask === null || botTask.task === BotTasksType.REPORT_ERROR) {
+        // Generate Error Message
+        return [
+            {
+                message: `Sorry I could not understand, try something else. \"Add weight\" or \"Enter weight\"`,
+                createdAt: DateToString()
+            }
+        ]
+    }
     if (botTask.task === BotTasksType.WEIGHT_INFO) {
         const messages = []
         AddWeightMessages.forEach( (msg) => {

@@ -28,7 +28,7 @@ const requestNext = async(req, res) => {
                 const botTask = {
                     task: BotTasksType.REPORT_ERROR,
                     data: {
-                        message: `Sorry I could not understand: ${reqData.query}, try something else`
+                        message: `Sorry I could not understand: ${reqData.query}, try something else.`
                     }
                 }
                 const messages = messageGenerator(botTask)
@@ -38,12 +38,12 @@ const requestNext = async(req, res) => {
                     quickActions: quickActions
                 })
             } else {
-                const botTask = processNLPResult(data)
+                const botTask = processNLPResult(reqData.query, data)
                 const messages = messageGenerator(botTask)
                 const quickActions = quickActionGenerator(botTask)
                 res.json({
                     messages: messages,
-                    quickActions: quickActions
+                    quickActions: quickActions.length > 0 ? quickActions : null
                 })
             }
         })

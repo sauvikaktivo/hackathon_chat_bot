@@ -56,7 +56,7 @@ const nplUserIntentMapper = [
     }
 ]
 
-const processNLPResult = (nlpResult) => {
+const processNLPResult = (originalText, nlpResult) => {
 
     // TODO: Due implementation
     // 1. Process incoming nlp result to figure out next task type for BOT
@@ -67,17 +67,21 @@ const processNLPResult = (nlpResult) => {
     // SENTENCE SIMILARITY CHECK BERT ALGO
     // COUPLE OF AWS MARKET PLACE APPS
 
-    return {
-        task: BotTasksType.WEIGHT_INFO,
-        data: {
-            date: new Date()
+    // SIMULATION
+    const words = originalText.toLowerCase().split(' ')
+    if((words.includes('add') || words.includes('enter')) && words.includes('weight')) {
+        return {
+            task: BotTasksType.WEIGHT_INFO,
+            data: {
+                date: new Date()
+            }
+        }
+    } else {
+        return {
+            task: BotTasksType.REPORT_ERROR,
+            data: { date: new Date() }
         }
     }
-    /*  In case of processing error passing error
-    return {
-        task: BotTasksType.REPORT_ERROR
-    }
-    */
 }
 
 module.exports = {
