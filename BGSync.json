@@ -1,6 +1,6 @@
 {
   "code": "ios-bg-sync-fitnessdata",
-  "status": "Active",
+  "status": "NO",
   "version": "1.0.0",
   "level": 1,
   "name": "iOS Fitness Data Background Sync Config",
