@@ -1,0 +1,44 @@
+{
+  "code": "ios-bg-sync-fitnessdata",
+  "status": "Active",
+  "version": "1.0.0",
+  "level": 1,
+  "name": "iOS Fitness Data Background Sync Config",
+  "data": {
+    "dataPointsToSubscribe": [
+      {
+        "type": "stepCount",
+        "enabled": true,
+        "frequency": "hourly"
+      },
+      {
+        "type": "workout",
+        "enabled": false,
+        "frequency": "hourly"
+      },
+      {
+        "type": "appleExerciseTime",
+        "enabled": false,
+        "frequency": "hourly"
+      },
+      {
+        "type": "sleepAnalysis",
+        "enabled": false,
+        "frequency": "daily"
+      },
+      {
+        "type": "distanceWalkingRunning",
+        "enabled": false,
+        "frequency": "hourly"
+      }
+    ],
+    "debugging": [
+      {
+        "type": "notification",
+        "enabled": true
+      }
+    ],
+    "minIntervalFitnessDataSync": 3600,
+    "minIntervalConfigSync": 3600
+  }
+}
